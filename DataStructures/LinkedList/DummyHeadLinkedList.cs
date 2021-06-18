@@ -4,9 +4,9 @@ using InterfaceDefine;
 
 namespace LinkedList
 {
-    public class MyLinkedList2<T> : AbstractList<T>
+    public class DummyHeadLinkedList<T> : AbstractList<T>
     {
-        public MyLinkedList2()
+        public DummyHeadLinkedList()
         {
             _first = new Node(default, null);
         }

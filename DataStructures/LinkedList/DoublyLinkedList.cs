@@ -46,19 +46,64 @@ namespace LinkedList
         public override void Add(int index, T element)
         {
             RangeCheckForAdd(index);
-            var preNode = index == 0 ? _first : GetNode(index - 1);
-            preNode.Next = new Node(element, preNode.Next);
+            if (index == _size)
+            {
+                var oldLast = _last;
+                _last = new Node(element, oldLast, null);
+                if (oldLast == null)
+                {
+                    _first = _last;
+                }
+                else
+                {
+                    oldLast.Next = _last;
+                }
+            }
+            else
+            {
+                var next = GetNode(index);
+                var prev = next.Prev;
+                var newNode = new Node(element, prev, next);
+                next.Prev = newNode;
+                if (prev == null)
+                {
+                    _first = newNode;
+                }
+                else
+                {  
+                    prev.Next = newNode;
+                }  
+            }
+           
             _size++;
         }
 
         public override T Remove(int index)
         {
             RangeCheck(index);
-            var preNode = index == 0 ? _first : GetNode(index - 1);
-            var node = preNode.Next;
-            preNode.Next = node.Next;
+            var delNode= GetNode(index);
+            var prev = delNode.Prev;
+            var next = delNode.Next;
+            if (prev == null)  //index == 0
+            {
+                _first = next;
+            }
+            else
+            {
+                prev.Next = next;
+            }
+
+            if (next == null)  //index == _size - 1
+            {
+                _last = prev;
+            }
+            else
+            {
+                next.Prev = prev;
+            }
+                
             _size--;
-            return node.Element;
+            return delNode.Element;
         }
 
         public override int IndexOf(T element)
@@ -87,7 +132,7 @@ namespace LinkedList
         /// <summary>
         /// 双向链表清空 首尾都需要清空
         /// </summary>
-        public override void Clear()
+         public override void Clear()
         {
             _size = 0;
             _first = null;
@@ -124,7 +169,7 @@ namespace LinkedList
         {
             StringBuilder sb = new StringBuilder(10);
             sb.Append("size = ").Append(_size).Append(", [");
-            var node = _first.Next;
+            var node = _first;
             for (var i = 0; i < _size; i++)
             {
                 if (i != 0)
