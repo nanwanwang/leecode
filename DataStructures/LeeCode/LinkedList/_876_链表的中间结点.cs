@@ -5,8 +5,8 @@
     /// </summary>
     public class _876_链表的中间结点
     {
-        public ListNode MiddleNode(ListNode head) {
-
-        }
+        // public ListNode MiddleNode(ListNode head) {
+        //
+        // }
     }
 }

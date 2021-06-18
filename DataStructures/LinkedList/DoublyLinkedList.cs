@@ -8,19 +8,23 @@ namespace LinkedList
     {
         public DoublyLinkedList()
         {
-            _first = new Node(default, null);
+            _first = new Node(default, null, null);
         }
 
         private Node _first;
+        private Node _last;
 
         public class Node
         {
             public T Element;
+            public Node Prev;
             public Node Next;
 
-            public Node(T element, Node next)
+
+            public Node(T element, Node prev, Node next)
             {
                 Element = element;
+                Prev = prev;
                 Next = next;
             }
         }
@@ -43,7 +47,7 @@ namespace LinkedList
         {
             RangeCheckForAdd(index);
             var preNode = index == 0 ? _first : GetNode(index - 1);
-            preNode.Next = new Node(element, preNode.Next) ;
+            preNode.Next = new Node(element, preNode.Next);
             _size++;
         }
 
@@ -80,23 +84,40 @@ namespace LinkedList
             return -1;
         }
 
+        /// <summary>
+        /// 双向链表清空 首尾都需要清空
+        /// </summary>
         public override void Clear()
         {
             _size = 0;
             _first = null;
+            _last = null;
         }
 
         private Node GetNode(int index)
         {
             RangeCheck(index);
-            Node node = _first.Next;
-
-            for (int i = 0; i < index; i++)
+            //双向链表 index小于_size一半从 头开始查找
+            if (index < (_size >> 1))
             {
-                node = node.Next;
-            }
+                var node = _first;
+                for (int i = 0; i < index; i++)
+                {
+                    node = node.Next;
+                }
 
-            return node;
+                return node;
+            } //双向链表 index大于等于_size一半从尾开始查找
+            else
+            {
+                var node = _last;
+                for (int i = _size - 1; i > index; i--)
+                {
+                    node = node.Prev;
+                }
+
+                return node;
+            }
         }
 
         public override string ToString()

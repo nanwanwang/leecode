@@ -93,7 +93,7 @@ namespace LinkedList
 
             for (int i = 0; i < index; i++)
             {
-                node = node\.Next;
+                node = node.Next;
             }
 
             return node;
