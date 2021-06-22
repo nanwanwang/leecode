@@ -1,12 +1,11 @@
 ﻿using System.Text;
-using DynamicArray;
 using InterfaceDefine;
 
 namespace LinkedList
 {
-    public class DoublyLinkedList<T> : AbstractList<T>
+    public class DoublyCircleLinkedList<T> : AbstractList<T>
     {
-        public DoublyLinkedList()
+        public DoublyCircleLinkedList()
         {
             _first = new Node(default, null, null);
         }
@@ -66,14 +65,17 @@ namespace LinkedList
             if (index == _size)
             {
                 var oldLast = _last;
-                _last = new Node(element, oldLast, null);
+                _last = new Node(element, oldLast, _first);
                 if (oldLast == null)
                 {
                     _first = _last;
+                    _first.Next = _first;
+                    _first.Prev = _first;
                 }
                 else
                 {
                     oldLast.Next = _last;
+                    _first.Prev = _last;
                 }
             }
             else
@@ -82,13 +84,11 @@ namespace LinkedList
                 var prev = next.Prev;
                 var newNode = new Node(element, prev, next);
                 next.Prev = newNode;
-                if (prev == null)
+                prev.Next = newNode;
+
+                if (index == 0) //或者 next == _first
                 {
                     _first = newNode;
-                }
-                else
-                {
-                    prev.Next = newNode;
                 }
             }
 
@@ -98,27 +98,32 @@ namespace LinkedList
         public override T Remove(int index)
         {
             RangeCheck(index);
-            var delNode = GetNode(index);
-            var prev = delNode.Prev;
-            var next = delNode.Next;
-            if (prev == null) //index == 0
+            var delNode = _first;
+            if (_size == 1)
             {
-                _first = next;
+                _first = null;
+                _last = null;
             }
             else
             {
-                prev.Next = next;
-            }
+                 delNode = GetNode(index);
+                var prev = delNode.Prev;
+                var next = delNode.Next;
+            
+                if (index == 0) //delNode = _first
+                {
+                    _first = next;
+                }
+            
+            
 
-            if (next == null) //index == _size - 1
-            {
-                _last = prev;
+                if (index == _size-1) // node == last
+                {
+                    _last = prev;
+                }
             }
-            else
-            {
-                next.Prev = prev;
-            }
-
+           
+           
             _size--;
             return delNode.Element;
         }
