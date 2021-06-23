@@ -2,6 +2,10 @@
 
 namespace Stack
 {
+    /// <summary>
+    /// FILO 先进后出
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class MyStack<T>
     {
         private MyLinkedList<T> _myLinkedList;
@@ -39,6 +43,11 @@ namespace Stack
         public override string ToString()
         {
             return _myLinkedList.ToString();
+        }
+
+        public void Clear()
+        {
+            _myLinkedList.Clear();
         }
     }
 }
