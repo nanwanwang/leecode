@@ -71,6 +71,7 @@ namespace Queue
         
         public void Clear()
         {
+            //循环遍历清空?
             _elements = new T[Default_Capacity];
             _size = 0;
             _front = 0;
