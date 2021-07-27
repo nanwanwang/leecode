@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Tree
 {
+    /// <summary>
+    /// 打印二叉树
+    /// </summary>
     public static class BTreePrinter
     {
         class NodeInfo<T>

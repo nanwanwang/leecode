@@ -8,7 +8,7 @@ namespace Tree
     {
         static void Main(string[] args)
         {
-            List<int> list = new List<int> { 7, 4, 9, 2, 5, 8, 11, 3 };
+            List<int> list = new List<int> { 7, 4, 9, 2, 5, 8, 11, 1 };
             BinarySearchTree<int> bst = new BinarySearchTree<int>();
 
             foreach (var item in list)
@@ -29,6 +29,9 @@ namespace Tree
             Console.WriteLine("--------");
             bst.LevelorderTraversal(x => { Console.WriteLine(x); });
 
+            Console.WriteLine(bst.Height());
+            Console.WriteLine(bst.IsComplete());
+
             var listPerson = new List<Person>
             {
               new Person{Name = "aa",Age=7 },
@@ -48,6 +51,8 @@ namespace Tree
             }
 
             BTreePrinter.Print(bst2._root);
+
+            Console.WriteLine(bst2.ToString());
         }
     }
 }
