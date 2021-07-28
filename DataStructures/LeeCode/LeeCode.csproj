@@ -9,8 +9,4 @@
       <ProjectReference Include="..\Stack\Stack.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Tree\" />
-    </ItemGroup>
-
 </Project>
