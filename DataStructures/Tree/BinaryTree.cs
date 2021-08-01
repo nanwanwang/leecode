@@ -335,6 +335,16 @@ namespace Tree
             Parent = parent;
         }
 
+        public bool IsLeftChild()
+        {
+            return Parent != null && this == Parent.Left;
+        }
+
+        public bool IsRightChild()
+        {
+            return Parent != null && this == Parent.Right;
+        }
+
         /// <summary>
         /// 判断是否为叶子节点
         /// </summary>

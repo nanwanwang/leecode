@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Tree
 {
-    public class BinarySearchTree<T>: BinaryTree<T>
+    public class BinarySearchTree<T> : BinaryTree<T>
     {
         private IComparer<T> _comparer;
 
@@ -28,8 +28,9 @@ namespace Tree
 
             if (_root == null)
             {
-                _root = new Node<T>(element, null);
+                _root = CreateNode(element, null);
                 _size++;
+                AfterAdd(_root);
                 return;
             }
 
@@ -55,7 +56,7 @@ namespace Tree
                 }
             }
 
-            Node<T> newNode = new Node<T>(element, parent);
+            Node<T> newNode = CreateNode(element, parent);
             if (compareResult > 0)
             {
                 parent.Right = newNode;
@@ -65,9 +66,19 @@ namespace Tree
                 parent.Left = newNode;
             }
 
-
+            AfterAdd(newNode);
             _size++;
 
+        }
+
+        protected void AfterAdd(Node<T> node)
+        {
+
+        }
+
+        protected Node<T> CreateNode(T element, Node<T> node)
+        {
+            return new Node<T>(element, node);
         }
 
         public void Remove(T element)
@@ -107,7 +118,7 @@ namespace Tree
                 {
                     node.Parent.Left = replacement;
                 }
-                else 
+                else
                 {
                     node.Parent.Right = replacement;
                 }
@@ -130,6 +141,8 @@ namespace Tree
 
             _size--;
         }
+
+
 
         private Node<T> GetNode(T element)
         {
@@ -156,7 +169,7 @@ namespace Tree
 
         public bool Contains(T element)
         {
-            return GetNode(element)!=null;
+            return GetNode(element) != null;
         }
 
         /// <summary>
@@ -174,12 +187,12 @@ namespace Tree
             return ((IComparable<T>)element1).CompareTo(element2);
         }
 
-      
 
-       
 
-    
+
+
+
     }
 
- 
+
 }
