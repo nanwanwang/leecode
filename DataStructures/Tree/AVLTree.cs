@@ -39,6 +39,27 @@ namespace Tree
             }
         }
 
+        protected override void AfterRemove(Node<T> node)
+        {
+            // while循环找到的是添加的节点网上找第一个不平衡的父节点
+            while ((node = node.Parent) != null)
+            {
+                //是否平衡
+                if (IsBalanced(node))
+                {
+                    //更新高度
+                    UpdateHeight(node);
+                }
+                else
+                {
+                    //恢复平衡
+                    Rebalance2(node);
+                }
+
+            }
+        }
+
+
         public bool IsBalanced(Node<T> node)
         {
             return Math.Abs(((AVLNode)node).BalanceFactor()) <= 1;

@@ -26,8 +26,16 @@ namespace Tree
 
             foreach (var item in list2)
             {
-                Console.WriteLine($"[{item}]");
+                //Console.WriteLine($"[{item}]");
                 avl.Add(item);
+                //BTreePrinter.Print(avl._root);
+                //Console.WriteLine("--------------------------------------------------------");
+            }
+
+            foreach (var item in list2)
+            {
+                Console.WriteLine($"[{item}]");
+                avl.Remove(item);
                 BTreePrinter.Print(avl._root);
                 Console.WriteLine("--------------------------------------------------------");
             }

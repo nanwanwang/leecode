@@ -76,6 +76,11 @@ namespace Tree
 
         }
 
+        protected virtual void AfterRemove(Node<T> node)
+        {
+
+        }
+
         protected virtual Node<T> CreateNode(T element, Node<T> node)
         {
             return new Node<T>(element, node);
@@ -101,6 +106,7 @@ namespace Tree
                 node = s;
             }
 
+         
             //删除node节点(node的度必然是1或者0)
             Node<T> replacement = node.Left != null ? node.Left : node.Right;
 
@@ -122,10 +128,15 @@ namespace Tree
                 {
                     node.Parent.Right = replacement;
                 }
+                
+                AfterRemove(node);
+
             }
             else if (node.Parent == null) //叶子节点并且是根节点
             {
                 _root = null;
+
+                AfterRemove(node);
             }
             else   // 叶子节点不是根节点
             {
@@ -137,6 +148,8 @@ namespace Tree
                 {
                     node.Parent.Right = null;
                 }
+
+                AfterRemove(node);
             }
 
             _size--;
