@@ -143,7 +143,6 @@ namespace Tree
         }
 
 
-
         private Node<T> GetNode(T element)
         {
             Node<T> node = _root;
@@ -186,10 +185,6 @@ namespace Tree
             }
             return ((IComparable<T>)element1).CompareTo(element2);
         }
-
-
-
-
 
 
     }
