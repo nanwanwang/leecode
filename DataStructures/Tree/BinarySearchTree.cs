@@ -71,12 +71,12 @@ namespace Tree
 
         }
 
-        protected void AfterAdd(Node<T> node)
+        protected virtual void AfterAdd(Node<T> node)
         {
 
         }
 
-        protected Node<T> CreateNode(T element, Node<T> node)
+        protected virtual Node<T> CreateNode(T element, Node<T> node)
         {
             return new Node<T>(element, node);
         }

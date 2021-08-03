@@ -18,7 +18,7 @@ namespace Tree
 
         }
 
-        protected new void AfterAdd(Node<T> node)
+        protected override void AfterAdd(Node<T> node)
         {
             // while循环找到的是添加的节点网上找第一个不平衡的父节点
             while ((node = node.Parent) != null)
@@ -44,7 +44,7 @@ namespace Tree
             return Math.Abs(((AVLNode)node).BalanceFactor()) <= 1;
         }
 
-        protected new Node<T> CreateNode(T element, Node<T> node)
+        protected override Node<T> CreateNode(T element, Node<T> node)
         {
             return new AVLNode(element, node);
         }
@@ -62,6 +62,105 @@ namespace Tree
         {
             var parent = ((AVLNode)grand).TallerChild();
             var node = ((AVLNode)parent).TallerChild();
+            if (parent.IsLeftChild())
+            {
+                if (node.IsLeftChild()) //LL
+                {
+                    RotateRight(grand);
+                }
+                else  //LR
+                {
+                    RotateLeft(parent);
+                    RotateRight(grand);
+                }
+            }
+            else
+            {
+                if (node.IsLeftChild()) //RL
+                {
+                    RotateRight(parent);
+                    RotateLeft(grand);
+                }
+                else  //RR
+                {
+                    RotateLeft(grand);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 左旋转
+        /// </summary>
+        /// <param name="node"></param>
+        private void RotateLeft(Node<T> grand)
+        {
+            var parent = grand.Right;
+            var child = parent.Left;
+            grand.Right = child;
+            parent.Left = grand;
+
+            //1.让parent成为子树的根节点
+            parent.Parent = grand.Parent;
+            if (grand.IsLeftChild())
+            {
+                grand.Parent.Left = parent;
+            }
+            else if (grand.IsRightChild())
+            {
+                grand.Parent.Right = parent;
+            }
+            else //grand 是 root节点
+            {
+                _root = parent;
+            }
+
+            //2.
+            if (child != null)
+                child.Parent = grand;
+
+            //3.更新grand parent
+            grand.Parent = parent;
+
+            //更新高度
+            UpdateHeight(grand);
+            UpdateHeight(parent);
+
+        }
+
+        /// <summary>
+        /// 右旋转
+        /// </summary>
+        /// <param name="node"></param>
+        private void RotateRight(Node<T> grand)
+        {
+            var parent = grand.Left;
+            var child = parent.Right;
+            grand.Left = child;
+            parent.Right = grand;
+
+
+
+            //1.让parent成为子树的根节点
+            parent.Parent = grand.Parent;
+            if (grand.IsLeftChild())
+            {
+                grand.Parent.Left = parent;
+            }
+            else if (grand.IsRightChild())
+            {
+                grand.Parent.Right = parent;
+            }
+            else //grand 是 root节点
+            {
+                _root = parent;
+            }
+
+            if (child != null)
+                child.Parent = grand;
+
+            UpdateHeight(grand);
+            UpdateHeight(parent);
+
         }
 
         public class AVLNode : Node<T>
@@ -93,7 +192,7 @@ namespace Tree
                 if (leftHeight > rightHeight) return Left;
                 if (leftHeight < rightHeight) return Right;
                 //高度一样返回 g节点相对于其父节点的位置方向一样
-                return IsLeftChild() ? Left:Right;
+                return IsLeftChild() ? Left : Right;
             }
         }
     }
