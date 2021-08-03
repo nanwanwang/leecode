@@ -26,12 +26,15 @@ namespace Tree
 
             foreach (var item in list2)
             {
+                Console.WriteLine($"[{item}]");
                 avl.Add(item);
+                BTreePrinter.Print(avl._root);
+                Console.WriteLine("--------------------------------------------------------");
             }
 
-            BTreePrinter.Print(bst2._root);
+            //BTreePrinter.Print(bst2._root);
 
-            Console.WriteLine("==================");
+            //Console.WriteLine("==================");
             BTreePrinter.Print(avl._root);
 
             //BTreePrinter.Print(bst._root);

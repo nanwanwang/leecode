@@ -158,6 +158,9 @@ namespace Tree
             if (child != null)
                 child.Parent = grand;
 
+            //3.更新grand parent
+            grand.Parent = parent;
+
             UpdateHeight(grand);
             UpdateHeight(parent);
 
